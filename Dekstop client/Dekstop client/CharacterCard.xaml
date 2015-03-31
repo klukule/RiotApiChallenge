@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="Dekstop_client.CharacterCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             Height="325" Width="204">
+    <Grid Margin="10,0,10,0">
+        <Image Name="champImage" Stretch="Uniform" UseLayoutRounding="True" Width="154" Height="280" Margin="0,22,0,0"></Image>
+        <Image Source="res/champOverlay.png" Width="184" Height="308" Margin="0,17,0,0"></Image>
+        <Viewbox VerticalAlignment="Top" Grid.Row="1" Margin="0,9,0,0" Width="75" StretchDirection="DownOnly" Height="25">
+        <Label Name="champName" FontFamily="Verdana" FontSize="14" FontWeight="Bold" MinWidth="75" Height="25" VerticalContentAlignment="Bottom" HorizontalContentAlignment="Center" Background="Transparent">
+            Placeholder
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="2" Opacity="0.35" Direction="-90"/>
+            </Label.Effect>
+            <Label.Foreground>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" >
+                    <GradientStop Color="#DFC689" Offset="0.1" />
+                    <GradientStop Color="#8A6C3E" Offset="1.0" />
+                </LinearGradientBrush>
+            </Label.Foreground>
+        </Label>
+            </Viewbox>
+    </Grid>
+</UserControl>

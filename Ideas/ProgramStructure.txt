@@ -1,0 +1,28 @@
+Desktop Client (C#)
+|-Getter (gets data from web part)
+||-GetData(if temp db isnt created yet)
+||-GetUpdate(gets only updates of DB, we dont want to download xxx MB every few minutes)
+|
+|-DBHandler
+||-ReadDB
+||-StoreDB
+||-AddToDB
+|
+|-Champion(class storring data about champion)
+||-Payed(int, count of played games)
+||-id
+||-name
+||-iconURL
+||-KDRatio
+
+
+
+
+
+Web client (C#) - runnig on VPS for constant data getting, stores data in downloadable format, for last hour,day,week etc.
+|-RiotApiWrapper
+||-GetData
+|
+|-DBHnadler
+|
+|-DataProvider(Provides data to client trouh web socket or something)

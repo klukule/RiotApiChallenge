@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Dekstop_client.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="liPre" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://ddragon.leagueoflegends.com/cdn/img/champion/loading/</Value>
+    </Setting>
+    <Setting Name="liSuf" Type="System.String" Scope="User">
+      <Value Profile="(Default)">_0.jpg</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
