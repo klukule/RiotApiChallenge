@@ -22,11 +22,11 @@ namespace Dekstop_client
         public MainWindow()
         {
             InitializeComponent();
-            panel.Children.Add(new CharacterCard("Garen", "Garen",1));
+            panel.Children.Add(new CharacterCard("Nasus", "Nasus",1));
             panel.Children.Add(new CharacterCard("Ahri", "Ahri",2));
             panel.Children.Add(new CharacterCard("Nunu", "Nunu",3));
             panel.Children.Add(new CharacterCard("Aatrox", "Aatrox",4));
-            panel.Children.Add(new CharacterCard("Fiddlesticks", "FiddleSticks",5));
+            panel.Children.Add(new CharacterCard("Super nadpis", "FiddleSticks",5));
         }
     }
 }
