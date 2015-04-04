@@ -19,7 +19,7 @@ Desktop Client (C#)
 
 
 
-Web client (C#) - runnig on VPS for constant data getting, stores data in downloadable format, for last hour,day,week etc.
+Web client (Node.js) - runnig on VPS for constant data getting, stores data in downloadable format, for last hour,day,week etc. (CURRENTLY ALL IN ONE FILE)
 |-RiotApiWrapper
 ||-GetData
 |
