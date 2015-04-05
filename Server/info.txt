@@ -1,0 +1,5 @@
+Parsers will parse required data from Riot Api
+RiotApi.js - basic functions for getting data from API
+run_...bat - launcher for all the threades (functions)
+WebSocket_server.js - as name suggest it will be server comunicating with client
+MySQL - Portable mysql for windows (DB handling)
