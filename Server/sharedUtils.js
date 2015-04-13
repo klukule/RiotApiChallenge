@@ -17,6 +17,14 @@ module.exports =
 
   clearScreen: function(){
     process.stdout.write('\033c');      //Super awesome escape sequence (only one which is working on windows :D)
+  },
+
+  paktc : function(){
+    console.log('Press any key to exit...');
+
+    process.stdin.setRawMode(true);
+    process.stdin.resume();
+    process.stdin.on('data', process.exit.bind(process, 0));
   }
 };
 
