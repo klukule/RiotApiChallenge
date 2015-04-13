@@ -1,5 +1,9 @@
 Parsers will parse required data from Riot Api
-RiotApi.js - basic functions for getting data from API
+RiotApi.js - basic functions for getting data from API      - very specific api for my requiremnets (why program full api wrapper when i dont need it :D)
 run_...bat - launcher for all the threades (functions)
 WebSocket_server.js - as name suggest it will be server comunicating with client
 MySQL - Portable mysql for windows (DB handling)
+
+
+
+EVERY Part can be runnig on separate machine(DB,MatchID parser, websocket server etc) (performance :D, dunno if there will be some performance issues but why not, maybe websocket server :D)

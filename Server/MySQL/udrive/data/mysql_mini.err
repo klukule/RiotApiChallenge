@@ -1,0 +1,8 @@
+Can't start server: Bind on TCP/IP port: Invalid argument
+150406 14:56:49 [ERROR] Do you already have another mysqld server running on port: 3311 ?
+150406 14:56:49 [ERROR] Aborting
+
+150406 14:56:49 [Note] \bin\mysqld-opt.exe: Shutdown complete
+
+150413 17:02:50 [Note] \bin\mysqld-opt.exe: ready for connections.
+Version: '5.0.67-community-nt'  socket: ''  port: 3311  MySQL Community Edition (GPL)
