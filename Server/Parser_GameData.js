@@ -45,8 +45,8 @@ function startParsing(){
             while(parsedCount != finalParseCount) {
               require('deasync').sleep(100);
             }
+            DBHandler.setMatchParsed(response,function(){done = true;});
           }
-          DBHandler.setMatchParsed(response,function(){done = true;});
         });
       }else{
         if(err == 1){
