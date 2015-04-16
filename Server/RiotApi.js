@@ -46,8 +46,8 @@ function getMatchIDs(time,callback){
     }else{
       if(response.statusCode === 429){
         if(_MODE == "standard"){
+          utils.logToConsole("[Riot API] Over limit, waiting 30 sec...","info");
           setTimeout(function(){
-            utils.logToConsole("[Riot API] Over limit, waiting 30 sec...","info");
             callback(response.statusCode,null);
           },30000); //Wait half a minute before calling callback (anti "spam" protection)
         }else if(_MODE == "fast"){
