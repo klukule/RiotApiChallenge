@@ -46,6 +46,8 @@ function startParsing(){
               require('deasync').sleep(100);
             }
             DBHandler.setMatchParsed(response,function(){done = true;});
+          }else{
+            done = true;
           }
         });
       }else{
