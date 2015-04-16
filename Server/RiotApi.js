@@ -49,7 +49,7 @@ function getMatchIDs(time,callback){
           callback(response.statusCode,null);
         }
       }else{
-        utils.logToConsole('[Riot API] Wrong response (bad api key?)','error');
+        utils.logToConsole('[Riot API] Wrong response (bad api key?) - error: ' + response.statusCode,'error');
         callback(response.statusCode,null);
 
       }

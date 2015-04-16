@@ -10,7 +10,7 @@ var time = 1427933400;      //Default start time - First set of URF matches
 var endTime = 1428918000;   //Ending of URF
 var curTime = Math.floor( Date.now() / 1000 )-450;        //-300 for five minutes bucket and -150 for give API time to process last five minutes
 
-DBHandler.getLatestParsedMatchSet(function(myTime){time = myTime;});
+DBHandler.getLatestParsedMatchSet(time,function(myTime){time = myTime;});      //Update start date
 
 startParsing();
 

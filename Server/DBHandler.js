@@ -33,8 +33,8 @@ module.exports = exports = {
     parseMatches(time,matches,callback);
   },
 
-  getLatestParsedMatchSet : function(callback){
-    getLatestParsedMatchSet(callback);
+  getLatestParsedMatchSet : function(start,callback){
+    getLatestParsedMatchSet(start,callback);
   }
 };
 
@@ -82,7 +82,7 @@ function disconnect(){
   connection.end();
 }
 
-function getLatestParsedMatchSet(callback){
+function getLatestParsedMatchSet(startDate,callback){
   var done = false;
   var output = 0;
   connection.query('SELECT COUNT(*) FROM `match`', function(err, result) {
@@ -97,11 +97,21 @@ function getLatestParsedMatchSet(callback){
           output = result[0]['MAX(matchTime)'];
           done = true;
         });
+      }
     }
+  });
+  while(!done){
+    require('deasync').sleep(100);
   }
-});
-while(!done){
-  require('deasync').sleep(100);
+  if(output == null){
+    output = startDate;
+  }
+  callback(output);
 }
-callback(output);
+
+function getMatchIDforChampDataParsing(callback){
+  ///
+  callback(false,matchID);
 }
+
+function parseMatchData(){}
