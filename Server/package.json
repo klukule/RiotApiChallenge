@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "colors": "^1.0.3",
+    "deasync": "^0.0.10",
+    "mysql": "^2.6.1",
+    "request": "^2.55.0"
+  },
+  "author": "Lukas 'klukule' Jech"
+}

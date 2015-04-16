@@ -23,6 +23,7 @@ function startParsing(){
     curTime = Math.floor( Date.now() / 1000 )-450;    //Update current time
     var done = false;
     if(time < curTime && time < endTime+1){   //+1 for nah for to me to be lazy to write less and equal :)
+
       RiotApi.getMatchIDs(time,function(err,out){
         if(!err){
           DBHandler.parseMatches(time,out,function(){
@@ -53,6 +54,6 @@ function startParsing(){
         }
     }
   }
-}
   utils.logToConsole("[Match ID Parser] Everything has been parsed","info");
   utils.paktc();
+}
