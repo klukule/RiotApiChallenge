@@ -10,6 +10,8 @@ DBHandler.init(process.argv[5],process.argv[6],process.argv[7],process.argv[8],p
 
 startParsing();
 
+//DBHandler.getLatestUnparsedMatchID(endTime, function(err,response){ console.log(err);console.log(response);});
+
 DBHandler.disconnect();
 
 function startParsing(){
@@ -17,13 +19,35 @@ function startParsing(){
   utils.logToConsole("[Game Data Parser] Parsing started","info");
   while(working){
     var done = false;
-    DBHandler.loadNotParsedMatchID(endTime,function(err,response){
+    var finalParseCount = 1; // just a temp val for not to allow to just jump next
+    var parsedCount = 0;
+    DBHandler.getLatestUnparsedMatchID(endTime,function(err,response){
+
       if(!err){
-        RiotApi.parseMatchDetails(response,function(err,details){
-          DBHandler.parseMatchDetails(details,function(){
-            done = true;
-          })
-        })
+        utils.logToConsole("[Game Data Parser] Parsing match "+ response,"info");
+
+        RiotApi.parseMatchDetails(response,function(err,details,parseCount){
+          if(!err){
+            finalParseCount = parseCount;
+            details.participants.forEach(function(participantInfo){
+              var champDataParsed = false;
+              RiotApi.parseChampionDetails(participantInfo.championId,function(err,championInfo){
+                DBHandler.parseChampionData(participantInfo,championInfo,function(){
+                  utils.logToConsole("[Game Data Parser] Champ "+("0" + parsedCount).slice(-2)+ " data updated","other");
+                  champDataParsed = true;
+                });
+                parsedCount++;
+              });
+              while(!champDataParsed){
+                require('deasync').sleep(100);
+              }
+            });
+            while(parsedCount != finalParseCount) {
+              require('deasync').sleep(100);
+            }
+          }
+          DBHandler.setMatchParsed(response,function(){done = true;});
+        });
       }else{
         if(err == 1){
           working = false;
@@ -37,6 +61,6 @@ function startParsing(){
       while(!done){
         require('deasync').sleep(100);
       }
-    }
+    });
   }
 }

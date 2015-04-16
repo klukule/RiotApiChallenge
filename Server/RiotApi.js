@@ -22,15 +22,77 @@ module.exports = exports = {
     }
   },
 
-  getMatchIDs: function(time, callback){
-    getMatchIDs(time,function(err,output){
-      callback(err,output);
-    });
+  getMatchIDs : function(time, callback){
+    getMatchIDs(time,callback);
+  },
+
+  parseMatchDetails : function(matchId,callback){
+    parseMatchDetails(matchId,callback);
+  },
+
+  parseChampionDetails : function(champId,callback){
+    parseChampionDetails(champId,callback);
   }
 };
 
 function getMatchIDs(time,callback){
   var url = "https://"+_REGION+".api.pvp.net/api/lol/"+_REGION+"/v4.1/game/ids?beginDate="+time+"&api_key=" + _APIKEY;
+  request({
+    url: url,
+    json: true
+  }, function (error, response, body) {
+    if (!error && response.statusCode === 200) {
+      callback(false,body);
+    }else{
+      if(response.statusCode === 429){
+        if(_MODE == "standard"){
+          setTimeout(function(){
+            utils.logToConsole("[Riot API] Over limit, waiting 30 sec...","info");
+            callback(response.statusCode,null);
+          },30000); //Wait half a minute before calling callback (anti "spam" protection)
+        }else if(_MODE == "fast"){
+          utils.logToConsole("[Riot API] Over limit, retrying (fast mod active)...","info");
+          callback(response.statusCode,null);
+        }
+      }else{
+        utils.logToConsole('[Riot API] Wrong response (bad api key?) - error: ' + response.statusCode,'error');
+        callback(response.statusCode,null);
+
+      }
+    }
+  });
+}
+
+function parseMatchDetails(matchId,callback){
+  var url = "https://"+_REGION+".api.pvp.net/api/lol/"+_REGION+"/v2.2/match/"+matchId+"?api_key=" + _APIKEY;
+  request({
+    url: url,
+    json: true
+  }, function (error, response, body) {
+    if (!error && response.statusCode === 200) {
+      callback(false,body,body.participants.length);
+    }else{
+      if(response.statusCode === 429){
+        if(_MODE == "standard"){
+          setTimeout(function(){
+            utils.logToConsole("[Riot API] Over limit, waiting 30 sec...","info");
+            callback(response.statusCode,null,null);
+          },30000); //Wait half a minute before calling callback (anti "spam" protection)
+        }else if(_MODE == "fast"){
+          utils.logToConsole("[Riot API] Over limit, retrying (fast mod active)...","info");
+          callback(response.statusCode,null,null);
+        }
+      }else{
+        utils.logToConsole('[Riot API] Wrong response (bad api key?) - error: ' + response.statusCode,'error');
+        callback(response.statusCode,null,null);
+
+      }
+    }
+  });
+}
+
+function parseChampionDetails(champId,callback){
+  var url = "https://global.api.pvp.net/api/lol/static-data/"+_REGION+"/v1.2/champion/"+champId+"?api_key=" + _APIKEY;
   request({
     url: url,
     json: true

@@ -35,6 +35,17 @@ module.exports = exports = {
 
   getLatestParsedMatchSet : function(start,callback){
     getLatestParsedMatchSet(start,callback);
+  },
+
+  getLatestUnparsedMatchID: function (endTime,callback){
+    getLatestUnparsedMatchID(endTime,callback);
+  },
+
+  parseChampionData : function(participantData,championData,callback){
+    parseChampionData(participantData,championData,callback);
+  },
+  setMatchParsed : function(matchId,callback){
+    setMatchParsed(matchId,callback);
   }
 };
 
@@ -109,9 +120,89 @@ function getLatestParsedMatchSet(startDate,callback){
   callback(output);
 }
 
-function getMatchIDforChampDataParsing(callback){
-  ///
-  callback(false,matchID);
+function getLatestUnparsedMatchID(endTime,callback){
+
+  var done = false;
+  var error = false;        //0 = No more matches in DB but there will be more so wait, 1 = No more in DB but there will be no more data
+  var matchId = null;
+
+  var curTime = Math.floor( Date.now() / 1000 )-450;        //-300 for five minutes bucket and -150 for give API time to process last five minutes
+
+  connection.query('SELECT COUNT(*) FROM `match`', function(err, result) {
+    if(err){
+      utils.logToConsole(err.stack,"stackTrace");
+    }else{
+      if(result['COUNT(*)'] == 0 ){
+        if(curTime < endTime + 1){
+          error = 0;
+          done = true;
+        }else{
+          error = 1;
+          done = true;
+        }
+      }else{
+        connection.query('SELECT matchId FROM `match` WHERE dataParsed = 0 LIMIT 1', function(err, result) {
+          if(err){
+            console.log(err);
+          }
+          else{
+            matchId = result[0].matchId;
+          }
+          done = true;
+        });
+      }
+    }
+  });
+
+  while(!done){
+    require('deasync').sleep(100);
+  }
+  callback(error,matchId);
 }
 
-function parseMatchData(){}
+
+function parseChampionData(participantData,championData,callback){
+  var chName = championData.name;
+  var chId = championData.id;
+  var chKey = championData.key;
+  var chWinner = participantData.stats.winner;
+  var chKills = participantData.stats.kills;
+  var chDeaths = participantData.stats.deaths;
+  var chWins = 0;
+  var chDefeats = 0;
+
+  connection.query('SELECT COUNT(championId) FROM championdata WHERE championId = ?',chId,function(err,result){
+    if(err){
+      console.log(err);
+      callback();
+    }else{
+      if(chWinner){
+          chWins++;
+      }else{
+        chDefeats++;
+      }
+      if(result[0]['COUNT(championId)'] == 0){
+        connection.query("INSERT IGNORE INTO championdata VALUES(?,?,?,?,?,?,?)", [chId, chName,chKey,chKills,chDeaths,chWins,chDefeats], function(err,result){
+          if(err){
+            console.log("error");
+          }
+          callback();
+        });
+      }else{
+        connection.query("UPDATE championdata SET kills = kills + ?,  deaths = deaths + ?,  wins = wins + ?, defeats = defeats + ? WHERE championId = ?", [chKills,chDeaths,chWins,chDefeats,chId],  function(err,result){
+          if(err){
+            console.log("error");
+          }
+          callback();
+        });
+      }
+    }
+  });
+}
+
+
+function setMatchParsed(matchId,callback){
+  connection.query("UPDATE `match` SET dataParsed = 1 WHERE matchId = ?",[matchId],function(err,result){
+    callback();
+  });
+}
