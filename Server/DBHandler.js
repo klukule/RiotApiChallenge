@@ -85,7 +85,8 @@ function parseMatches(time,matches,callback){
   while(actualCount < referenceCount){
     require('deasync').sleep(100);
   }
-  utils.logToConsole("[DB Handler] "+("0" + referenceCount).slice(-2)+" matches for time "+time+" parsed");
+  utils.clearScreen();
+  utils.logToConsole("[DB Handler] time - "+time+" | matches parsed - "+referenceCount);
   callback();
 }
 

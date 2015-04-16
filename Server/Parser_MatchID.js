@@ -9,6 +9,7 @@ DBHandler.init(process.argv[5],process.argv[6],process.argv[7],process.argv[8],p
 var time = 1427933400;      //Default start time - First set of URF matches
 var endTime = 1428918000;   //Ending of URF
 var curTime = Math.floor( Date.now() / 1000 )-450;        //-300 for five minutes bucket and -150 for give API time to process last five minutes
+var curSeasonMatchesParsed = 0;     //Count of parsed matches in this season
 
 DBHandler.getLatestParsedMatchSet(time,function(myTime){time = myTime;});      //Update start date
 
@@ -26,9 +27,13 @@ function startParsing(){
 
       RiotApi.getMatchIDs(time,function(err,out){
         if(!err){
+          curSeasonMatchesParsed+= out.length;
           DBHandler.parseMatches(time,out,function(){
             time += 300;
           });
+          utils.logToConsole("","");      //Blank lines
+          utils.logToConsole("","");      //-_-
+          utils.logToConsole("Total parsed in this season: "+ curSeasonMatchesParsed,"info");
         }
         done = true;
       });

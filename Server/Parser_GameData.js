@@ -24,6 +24,7 @@ function startParsing(){
     DBHandler.getLatestUnparsedMatchID(endTime,function(err,response){
 
       if(!err){
+        utils.clearScreen();
         utils.logToConsole("[Game Data Parser] Parsing match "+ response,"info");
 
         RiotApi.parseMatchDetails(response,function(err,details,parseCount){

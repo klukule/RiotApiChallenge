@@ -27,7 +27,3 @@ module.exports =
     process.stdin.on('data', process.exit.bind(process, 0));
   }
 };
-
-var privateFunction = function ()
-{
-};
