@@ -141,12 +141,12 @@ function getLatestUnparsedMatchID(endTime,callback){
           done = true;
         }
       }else{
-        connection.query('SELECT matchId FROM `match` WHERE dataParsed = 0 LIMIT 1', function(err, result) {
+        connection.query('SELECT MIN(matchId) FROM `match` WHERE dataParsed = 0 LIMIT 1', function(err, result) {
           if(err){
-            console.log(err);
+            utils.logToConsole(err.stack,"stackTrace");
           }
           else{
-            matchId = result[0].matchId;
+            matchId = result[0]['MIN(matchId)'];
           }
           done = true;
         });
@@ -173,7 +173,7 @@ function parseChampionData(participantData,championData,callback){
 
   connection.query('SELECT COUNT(championId) FROM championdata WHERE championId = ?',chId,function(err,result){
     if(err){
-      console.log(err);
+      utils.logToConsole(err.stack,"stackTrace");
       callback();
     }else{
       if(chWinner){
@@ -184,14 +184,14 @@ function parseChampionData(participantData,championData,callback){
       if(result[0]['COUNT(championId)'] == 0){
         connection.query("INSERT IGNORE INTO championdata VALUES(?,?,?,?,?,?,?)", [chId, chName,chKey,chKills,chDeaths,chWins,chDefeats], function(err,result){
           if(err){
-            console.log("error");
+            utils.logToConsole(err.stack,"stackTrace");
           }
           callback();
         });
       }else{
         connection.query("UPDATE championdata SET kills = kills + ?,  deaths = deaths + ?,  wins = wins + ?, defeats = defeats + ? WHERE championId = ?", [chKills,chDeaths,chWins,chDefeats,chId],  function(err,result){
           if(err){
-            console.log("error");
+            utils.logToConsole(err.stack,"stackTrace");
           }
           callback();
         });
