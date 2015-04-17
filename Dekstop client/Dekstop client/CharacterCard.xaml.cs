@@ -108,7 +108,8 @@ namespace Dekstop_client
 
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show(this.wins.ToString());
+            //MessageBox.Show(this.wins.ToString());
+            MainWindow.showDetails(championName,wins, defeats, kills, deaths);
         }
 
         private void Image_MouseLeave(object sender, MouseEventArgs e)

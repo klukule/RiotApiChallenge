@@ -2,15 +2,44 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:Dekstop_client"
-        Title="MainWindow" Height="720" Width="1280" WindowStartupLocation="CenterScreen">
+        Title="URF ~ Top 5 played champions" Height="720" Width="1280" WindowStartupLocation="CenterScreen">
     
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="res/bg-landing.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <StackPanel Orientation="Horizontal" Name="panel" VerticalAlignment="Top" HorizontalAlignment="Center"></StackPanel>
-            <Image Source="res/statsBg.png" Width="1038" Height="326" Margin="0,10,0,0" Unloaded="Image_Unloaded"></Image>
+            <StackPanel Orientation="Horizontal" Name="panel" VerticalAlignment="Top" HorizontalAlignment="Center" Unloaded="Panel_Unloaded"></StackPanel>
+            <Grid  Width="1038" Height="326" Margin="0,10,0,0" >
+                <Grid.Background>
+                    <ImageBrush ImageSource="res/statsBg.png" Stretch="UniformToFill"/>
+                </Grid.Background>
+                <StackPanel Name="DataPanel" Visibility="Hidden" Margin="50,50,50,35">
+                    <Label Name="StatsFor" Content="Stats for PlaceHolder" FontSize="30" HorizontalContentAlignment="Center">
+                        <Label.Effect>
+                            <DropShadowEffect ShadowDepth="2" Opacity="0.35" Direction="-90"/>
+                        </Label.Effect>
+                        <Label.Foreground>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" >
+                                <GradientStop Color="#DFC689" Offset="0.1" />
+                                <GradientStop Color="#8A6C3E" Offset="1.0" />
+                            </LinearGradientBrush>
+                        </Label.Foreground>
+                    </Label>
+                    <Grid Height="25">
+                        <Label Panel.ZIndex="16" Content="Kills"></Label>
+                        <Label Panel.ZIndex="16" Content="Deaths" HorizontalContentAlignment="Right"></Label>
+                        <Label Panel.ZIndex="16" Content="XXXX / XXXX" HorizontalContentAlignment="Center" Name="KDRatioText"></Label>
+                        <ProgressBar Panel.ZIndex="15" Height="25" Maximum="100" Value="100" Name="KDRatio"></ProgressBar>
+                    </Grid>
+                    <Grid Height="25">
+                        <Label Panel.ZIndex="16" Content="Wins"></Label>
+                        <Label Panel.ZIndex="16" Content="Defeats" HorizontalContentAlignment="Right"></Label>
+                        <Label Panel.ZIndex="16" Content="XXXX / XXXX" HorizontalContentAlignment="Center" Name="WDRatioText"></Label>
+                        <ProgressBar Panel.ZIndex="15" Height="25" Maximum="100" Value="100" Name="WDRatio"></ProgressBar>
+                    </Grid>
+                </StackPanel>
+            </Grid >
         </StackPanel>
     </Grid>
 </Window>

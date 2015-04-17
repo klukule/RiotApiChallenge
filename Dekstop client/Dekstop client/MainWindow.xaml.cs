@@ -22,9 +22,40 @@ namespace Dekstop_client
     public partial class MainWindow : Window
     {
         Socket socket;
+        static ProgressBar kdRatioBar;
+        static ProgressBar wdRatioBar;
+        static StackPanel dataPanel;
+        static Label statsForLabel;
+        static Label kdRatioLabel;
+        static Label wdRatioLabel;
+        public static void showDetails(string name,int wins,int defeats,int kills,int deaths)
+        {
+            if (dataPanel.Visibility == Visibility.Hidden)
+            {
+                dataPanel.Visibility = Visibility.Visible;
+            }
+            kdRatioLabel.Content = kills + " / " + deaths;
+
+            wdRatioLabel.Content = wins + " / " + defeats;
+            statsForLabel.Content = "Statistics for " + name;
+
+            kdRatioBar.Maximum = kills + deaths;
+            kdRatioBar.Value = kills;
+            wdRatioBar.Maximum = wins + defeats;
+            wdRatioBar.Value = wins;
+        }
+
         public MainWindow(JArray startingData,Socket socket)
         {
             InitializeComponent();
+
+            kdRatioBar = KDRatio;
+            wdRatioBar = WDRatio;
+            dataPanel = DataPanel;
+            statsForLabel = StatsFor;
+            kdRatioLabel = KDRatioText;
+            wdRatioLabel = WDRatioText;
+
             this.socket = socket;
             foreach (JToken token in startingData)
             {
@@ -62,7 +93,7 @@ namespace Dekstop_client
             });
         }
 
-        private void Image_Unloaded(object sender, RoutedEventArgs e)
+        private void Panel_Unloaded(object sender, RoutedEventArgs e)
         {
             socket.Off("update");
         }
