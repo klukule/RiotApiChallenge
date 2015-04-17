@@ -6,8 +6,8 @@ var utils = require('./sharedUtils');
 var DBHandler = require('./DBHandler');
 
 var _PORT = 3000;
-//var _UPDATEINTERVAL = 300000;     //Normal interval
-var _UPDATEINTERVAL = 3000;         //Debuging interval
+var _UPDATEINTERVAL = 300000;     //Normal interval
+//var _UPDATEINTERVAL = 3000;         //Debuging interval
 
 var connectedClients = 0;
 
@@ -51,7 +51,9 @@ function sendPersonalUpdate(socket){
 }
 
 function sendUpdate(){
-  DBHandler.getDataForClient(function(data){
-    io.emit('update',data);  //Send data to all clients
-  });
+  if(connectedClients > 0){
+    DBHandler.getDataForClient(function(data){
+      io.emit('update',data);  //Send data to all clients
+    });
+  }
 }

@@ -8,5 +8,11 @@
     <Setting Name="liSuf" Type="System.String" Scope="User">
       <Value Profile="(Default)">_0.jpg</Value>
     </Setting>
+    <Setting Name="socketServerURL" Type="System.String" Scope="User">
+      <Value Profile="(Default)">54.201.28.167</Value>
+    </Setting>
+    <Setting Name="socketServerPort" Type="System.String" Scope="User">
+      <Value Profile="(Default)">3000</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

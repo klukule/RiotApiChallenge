@@ -11,6 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Quobject.SocketIoClientDotNet.Client;
+using Newtonsoft.Json.Linq;
 
 namespace Dekstop_client
 {
@@ -19,14 +21,29 @@ namespace Dekstop_client
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow(JArray startingData,Socket socket)
         {
             InitializeComponent();
-            panel.Children.Add(new CharacterCard("Nasus", "Nasus",1));
-            panel.Children.Add(new CharacterCard("Ahri", "Ahri",2));
-            panel.Children.Add(new CharacterCard("Nunu", "Nunu",3));
-            panel.Children.Add(new CharacterCard("Aatrox", "Aatrox",4));
-            panel.Children.Add(new CharacterCard("Super nadpis", "FiddleSticks",5));
+            foreach (JToken token in startingData)
+            {
+                CharacterCard character = new CharacterCard((string)token["championName"], (string)token["championKey"], (int)token["championId"]);
+                panel.Children.Add(character);
+            }
+
+            socket.On("update", (data) =>
+            {
+                //List<CharacterCard> newChars = new List<CharacterCard>();
+                Dispatcher.Invoke(new Action(() => panel.Children.Clear()));
+                 
+                foreach (JToken token in (JArray)data)
+                {
+                    Application.Current.Dispatcher.Invoke((Action)delegate
+               {
+                   CharacterCard character = new CharacterCard((string)token["championName"], (string)token["championKey"], (int)token["championId"]);
+                   Dispatcher.Invoke(new Action(() => panel.Children.Add(character)));
+               });
+                }
+            });
         }
     }
 }

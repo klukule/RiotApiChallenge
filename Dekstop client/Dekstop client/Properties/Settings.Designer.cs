@@ -46,5 +46,29 @@ namespace Dekstop_client.Properties {
                 this["liSuf"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("54.201.28.167")]
+        public string socketServerURL {
+            get {
+                return ((string)(this["socketServerURL"]));
+            }
+            set {
+                this["socketServerURL"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3000")]
+        public string socketServerPort {
+            get {
+                return ((string)(this["socketServerPort"]));
+            }
+            set {
+                this["socketServerPort"] = value;
+            }
+        }
     }
 }

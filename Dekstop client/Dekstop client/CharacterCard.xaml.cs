@@ -63,9 +63,9 @@ namespace Dekstop_client
         private void champName_Loaded(object sender, RoutedEventArgs e)
         {
             Label label = (Label)sender;
-            if (label.ActualWidth > 75)
+            if (label.ActualWidth > 77)
             {
-                MessageBox.Show("label " + label.Content.ToString() + " will be scaled");
+                //MessageBox.Show("label " + label.Content.ToString() + " will be scaled");
                 System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
                 dispatcherTimer.Tick += dispatcherTimer_Tick;
                 dispatcherTimer.Interval = new TimeSpan(0,0,0,0,1);
