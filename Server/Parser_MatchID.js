@@ -43,8 +43,6 @@ function startParsing(){
     }
     else{
         utils.logToConsole("[Match ID Parser] All updated waiting for more data","info");
-        console.log(time);
-        console.log(endTime);
         if(time == endTime+300){ //+300 cause last successfull querry added 300 :)
           working = false;
           done = true;

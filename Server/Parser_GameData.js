@@ -42,6 +42,7 @@ function startParsing(){
                   parsedCount++;
                 }
                 else{
+                  champDataParsed = true;
                   errorWhenParsing = true;
                   parsedCount++;
                 }
