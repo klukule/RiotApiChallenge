@@ -6,14 +6,18 @@ var utils = require('./sharedUtils');
 var DBHandler = require('./DBHandler');
 
 var _PORT = 3000;
-//var _UPDATEINTERVAL = 300000;
-var _UPDATEINTERVAL = 3000;
+//var _UPDATEINTERVAL = 300000;     //Normal interval
+var _UPDATEINTERVAL = 3000;         //Debuging interval
 
 var connectedClients = 0;
 
 updateGUI();    //Prepare GUI
 DBHandler.init(process.argv[2],process.argv[3],process.argv[4],process.argv[5],process.argv[6]);
 //DBHandler.getDataForClient(function(){});
+
+app.get('/', function(req, res){
+  res.send('<h1>Info panel in development</h1>');
+});
 
 //SOCKET HANDLING
 io.on('connection', function(socket){

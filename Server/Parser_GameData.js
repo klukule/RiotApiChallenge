@@ -56,7 +56,8 @@ function startParsing(){
             }
             if(!errorWhenParsing){
               DBHandler.setMatchParsed(response,function(){done = true;});
-            }
+            }else
+            done = true;
           }else{
             done = true;
           }
