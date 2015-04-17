@@ -33,22 +33,11 @@ namespace Dekstop_client
 
                 Application.Current.Dispatcher.Invoke((Action)delegate
                 {
-                    socket.Off("update");
+                    socket.Off("update"); //Disable invoking update in this thread (we dont want more than one window)
                     MainWindow window = new MainWindow((JArray)data, socket);
                     window.Show();
                     this.Close();
                 });
-                /*foreach (JToken token in array)
-                {
-                    Console.WriteLine(token["championId"]);
-                    Console.WriteLine(token["championKey"]);
-                    Console.WriteLine(token["championName"]);
-                    Console.WriteLine(token["kills"]);
-                    Console.WriteLine(token["deaths"]);
-                    Console.WriteLine(token["wins"]);
-                    Console.WriteLine(token["defeats"]);
-                    Console.WriteLine("-----------");
-                }*/
             });
         }
     }

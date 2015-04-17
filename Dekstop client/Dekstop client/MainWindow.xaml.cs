@@ -21,29 +21,50 @@ namespace Dekstop_client
     /// </summary>
     public partial class MainWindow : Window
     {
+        Socket socket;
         public MainWindow(JArray startingData,Socket socket)
         {
             InitializeComponent();
+            this.socket = socket;
             foreach (JToken token in startingData)
             {
-                CharacterCard character = new CharacterCard((string)token["championName"], (string)token["championKey"], (int)token["championId"]);
+                CharacterCard character = new CharacterCard((string)token["championName"],(string)token["championKey"], (int)token["championId"],(int)token["wins"],(int)token["defeats"], (int)token["kills"],(int)token["deaths"]);
+
                 panel.Children.Add(character);
             }
 
             socket.On("update", (data) =>
             {
-                //List<CharacterCard> newChars = new List<CharacterCard>();
-                Dispatcher.Invoke(new Action(() => panel.Children.Clear()));
-                 
+                int index = 0;
                 foreach (JToken token in (JArray)data)
                 {
                     Application.Current.Dispatcher.Invoke((Action)delegate
-               {
-                   CharacterCard character = new CharacterCard((string)token["championName"], (string)token["championKey"], (int)token["championId"]);
-                   Dispatcher.Invoke(new Action(() => panel.Children.Add(character)));
-               });
+                    {
+                        CharacterCard card = (CharacterCard)panel.Children[index];
+                        if ((string)token["championName"] == card.championName)
+                        {
+                            card.updateStats((int)token["wins"], (int)token["defeats"], (int)token["kills"], (int)token["deaths"]);
+                        }
+                        else
+                        {
+                            card.update(
+                                (string)token["championName"],
+                                (string)token["championKey"],
+                                (int)token["championId"],
+                                (int)token["wins"],
+                                (int)token["defeats"],
+                                (int)token["kills"],
+                                (int)token["deaths"]);
+                        }
+                        index++;
+                    });
                 }
             });
+        }
+
+        private void Image_Unloaded(object sender, RoutedEventArgs e)
+        {
+            socket.Off("update");
         }
     }
 }

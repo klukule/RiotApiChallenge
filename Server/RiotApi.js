@@ -72,7 +72,7 @@ function parseMatchDetails(matchId,callback){
     if (!error && response.statusCode === 200) {
       callback(false,body,body.participants.length);
     }else{
-      if(response.statusCode === 429){
+      if(response != undefined && response.statusCode === 429){
         if(_MODE == "standard"){
           setTimeout(function(){
             utils.logToConsole("[Riot API] Over limit, waiting 30 sec...","info");

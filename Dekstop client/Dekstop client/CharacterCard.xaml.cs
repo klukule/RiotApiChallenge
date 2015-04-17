@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Timers;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Effects;
 
 namespace Dekstop_client
 {
@@ -24,13 +25,41 @@ namespace Dekstop_client
         public string championName { get; set; }
         public int championID { get; set; }
 
+        public int wins { get; set; }
+        public int defeats { get; set; }
+        public int kills { get; set; }
+        public int deaths { get; set; }
 
-        public CharacterCard(string showName,string imageName,int champID)
+        public CharacterCard(string showName,string imageName,int champID,int wins,int defeats,int kills,int deaths)
         {
             InitializeComponent();
             changeName(showName);
             changeImage(imageName);
             this.championID = champID;
+            this.wins = wins;
+            this.defeats = defeats;
+            this.kills = kills;
+            this.deaths = deaths;
+        }
+        //Update all data
+        public void update(string showName, string imageName, int champID, int wins, int defeats, int kills, int deaths)
+        {
+            InitializeComponent();
+            changeName(showName);
+            changeImage(imageName);
+            this.championID = champID;
+            this.wins = wins;
+            this.defeats = defeats;
+            this.kills = kills;
+            this.deaths = deaths;
+        }
+        //Update only stats
+        public void updateStats(int wins, int defeats, int kills, int deaths)
+        {
+            this.wins = wins;
+            this.defeats = defeats;
+            this.kills = kills;
+            this.deaths = deaths;
         }
         bool returning = false;
         public void transformText()
@@ -75,6 +104,36 @@ namespace Dekstop_client
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             transformText();
+        }
+
+        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show(this.wins.ToString());
+        }
+
+        private void Image_MouseLeave(object sender, MouseEventArgs e)
+        {
+            imageOverlay.Effect =
+            new DropShadowEffect
+            {
+                Color = Colors.Orange,
+                ShadowDepth = 0,
+                Opacity = 0,
+                BlurRadius = 5,
+            };
+        }
+
+        private void Image_MouseEnter(object sender, MouseEventArgs e)
+        {
+
+            imageOverlay.Effect =
+            new DropShadowEffect
+            {
+                Color = Colors.Orange,
+                ShadowDepth=0,
+                Opacity=1,
+                BlurRadius=5,
+            };
         }
     }
 }

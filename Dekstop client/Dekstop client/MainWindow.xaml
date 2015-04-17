@@ -2,15 +2,15 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:Dekstop_client"
-        Title="MainWindow" Height="720" Width="1280">
+        Title="MainWindow" Height="720" Width="1280" WindowStartupLocation="CenterScreen">
     
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="res/bg-landing.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
-        <StackPanel>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel Orientation="Horizontal" Name="panel" VerticalAlignment="Top" HorizontalAlignment="Center"></StackPanel>
-            <Image Source="res/statsBg.png" Width="1038" Height="326" ></Image>
+            <Image Source="res/statsBg.png" Width="1038" Height="326" Margin="0,10,0,0" Unloaded="Image_Unloaded"></Image>
         </StackPanel>
     </Grid>
 </Window>
