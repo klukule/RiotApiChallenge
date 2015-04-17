@@ -1,1 +1,0 @@
-cause SQLITE sucks (i wanted to have this as much portable as i can but i see that SQLITE was a wery bad choise)

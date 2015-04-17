@@ -21,6 +21,7 @@ function startParsing(){
     var done = false;
     var finalParseCount = 1; // just a temp val for not to allow to just jump next
     var parsedCount = 0;
+    var errorWhenParsing = false;
     DBHandler.getLatestUnparsedMatchID(endTime,function(err,response){
 
       if(!err){
@@ -33,11 +34,17 @@ function startParsing(){
             details.participants.forEach(function(participantInfo){
               var champDataParsed = false;
               RiotApi.parseChampionDetails(participantInfo.championId,function(err,championInfo){
-                DBHandler.parseChampionData(participantInfo,championInfo,function(){
-                  utils.logToConsole("[Game Data Parser] Champ "+("0" + parsedCount).slice(-2)+ " data updated","other");
-                  champDataParsed = true;
-                });
-                parsedCount++;
+                if(!err){
+                  DBHandler.parseChampionData(participantInfo,championInfo,function(){
+                    utils.logToConsole("[Game Data Parser] Champ "+("0" + parsedCount).slice(-2)+ " data updated","other");
+                    champDataParsed = true;
+                  });
+                  parsedCount++;
+                }
+                else{
+                  errorWhenParsing = true;
+                  parsedCount++;
+                }
               });
               while(!champDataParsed){
                 require('deasync').sleep(100);
@@ -46,7 +53,9 @@ function startParsing(){
             while(parsedCount != finalParseCount) {
               require('deasync').sleep(100);
             }
-            DBHandler.setMatchParsed(response,function(){done = true;});
+            if(!errorWhenParsing){
+              DBHandler.setMatchParsed(response,function(){done = true;});
+            }
           }else{
             done = true;
           }
