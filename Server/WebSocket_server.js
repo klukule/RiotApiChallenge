@@ -3,28 +3,33 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 var utils = require('./sharedUtils');
+var DBHandler = require('./DBHandler');
 
 var _PORT = 3000;
-var _UPDATEINTERVAL = 300000;
+//var _UPDATEINTERVAL = 300000;
+var _UPDATEINTERVAL = 3000;
 
 var connectedClients = 0;
 
+updateGUI();    //Prepare GUI
+DBHandler.init(process.argv[2],process.argv[3],process.argv[4],process.argv[5],process.argv[6]);
+//DBHandler.getDataForClient(function(){});
 
 //SOCKET HANDLING
 io.on('connection', function(socket){
   connectedClients++;
   updateGUI();
-
-  socket.emit('update',"Prvni varka");
+  sendPersonalUpdate(socket);
 
   socket.on('disconnect', function(){
     connectedClients--;
     updateGUI();
   });
 });
+
 http.listen(_PORT, function(){
   updateGUI();
-  sendUpdate();   //Send first update
+  sendUpdate();   //Send first update right after start for to be sure :)
   setInterval(function(){sendUpdate();},_UPDATEINTERVAL);   //Set interval every _UPDATEINTERVAL miliseconds
 
 });
@@ -35,6 +40,14 @@ function updateGUI(){
   console.log('connected clients: '+connectedClients);
 }
 
+function sendPersonalUpdate(socket){
+  DBHandler.getDataForClient(function(data){
+    socket.emit('update',data);  //send only to connected client
+  });
+}
+
 function sendUpdate(){
-  io.emit("update","dalsi data");
+  DBHandler.getDataForClient(function(data){
+    io.emit('update',data);  //Send data to all clients
+  });
 }

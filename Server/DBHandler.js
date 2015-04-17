@@ -44,8 +44,13 @@ module.exports = exports = {
   parseChampionData : function(participantData,championData,callback){
     parseChampionData(participantData,championData,callback);
   },
+
   setMatchParsed : function(matchId,callback){
     setMatchParsed(matchId,callback);
+  },
+
+  getDataForClient : function(callback){
+    getDataForClient(callback);
   }
 };
 
@@ -206,4 +211,11 @@ function setMatchParsed(matchId,callback){
   connection.query("UPDATE `match` SET dataParsed = 1 WHERE matchId = ?",[matchId],function(err,result){
     callback();
   });
+}
+
+function getDataForClient(callback){
+  connection.query("SELECT * FROM `championdata` ORDER BY `wins`+`defeats` DESC LIMIT 5;",function(err,result){
+    callback(result);
+  });
+  //callback("HELLO");
 }
