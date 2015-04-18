@@ -2,6 +2,7 @@
 ## URF ~ Top 5 played champions
 
 This is pretty lame idea with reliable (pretty much stable) server backend.
+>DB here is used only as caching option (cause you can't make average of data without all data at once)
 
 ### Client
 ![Client screen](http://klukule.moowdesign.eu/ClientScreen.png)
