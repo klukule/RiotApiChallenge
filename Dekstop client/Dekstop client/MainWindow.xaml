@@ -3,7 +3,24 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:Dekstop_client"
         Title="URF ~ Top 5 played champions" Height="720" Width="1280" WindowStartupLocation="CenterScreen">
-    
+    <Window.Resources>
+        <Style TargetType="ProgressBar">
+            <Setter Property="Width" Value="100" />
+            <Setter Property="Height" Value="100" />
+            <Setter Property="Margin" Value="10,0,10,0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ProgressBar">
+
+                        <Border Name="PART_Track" Width="{TemplateBinding Width}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}"  >
+                            
+                            <Rectangle Name="PART_Indicator" HorizontalAlignment="Left" Fill="{TemplateBinding Foreground}" Height="{TemplateBinding Height}" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="res/bg-landing.jpg" Stretch="UniformToFill"/>
@@ -14,31 +31,90 @@
                 <Grid.Background>
                     <ImageBrush ImageSource="res/statsBg.png" Stretch="UniformToFill"/>
                 </Grid.Background>
-                <StackPanel Name="DataPanel" Visibility="Hidden" Margin="50,50,50,35">
-                    <Label Name="StatsFor" Content="Stats for PlaceHolder" FontSize="30" HorizontalContentAlignment="Center">
+                <StackPanel Name="DataPanel" Margin="50,50,50,35">
+                    <Label Name="StatsFor" Content="Click above to see statistics for champion" FontSize="30" HorizontalContentAlignment="Center">
                         <Label.Effect>
                             <DropShadowEffect ShadowDepth="2" Opacity="0.35" Direction="-90"/>
                         </Label.Effect>
                         <Label.Foreground>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" >
-                                <GradientStop Color="#DFC689" Offset="0.1" />
+                                <GradientStop Color="#D4B979" Offset="0.0" />
                                 <GradientStop Color="#8A6C3E" Offset="1.0" />
                             </LinearGradientBrush>
                         </Label.Foreground>
                     </Label>
                     <Grid Height="25">
-                        <Label Panel.ZIndex="16" Content="Kills"></Label>
-                        <Label Panel.ZIndex="16" Content="Deaths" HorizontalContentAlignment="Right"></Label>
-                        <Label Panel.ZIndex="16" Content="XXXX / XXXX" HorizontalContentAlignment="Center" Name="KDRatioText"></Label>
-                        <ProgressBar Panel.ZIndex="15" Height="25" Maximum="100" Value="100" Name="KDRatio"></ProgressBar>
+                        <Label Panel.ZIndex="16" Content="Kills" Foreground="White">
+                            <Label.Effect>
+                                <DropShadowEffect ShadowDepth="0" BlurRadius="3" Color="Black" />
+                            </Label.Effect>
+                        </Label>
+                        <Label Panel.ZIndex="16" Content="Deaths" HorizontalContentAlignment="Right" Foreground="White">
+                            <Label.Effect>
+                                <DropShadowEffect ShadowDepth="0" BlurRadius="3" Color="Black" />
+                            </Label.Effect>
+                        </Label>
+                        <Label Panel.ZIndex="16" Content="0 / 0" HorizontalContentAlignment="Center" Name="KDRatioText" Foreground="White">
+                            <Label.Effect>
+                                <DropShadowEffect ShadowDepth="0" BlurRadius="3" Color="Black" />
+                            </Label.Effect>
+                        </Label>
+                        <ProgressBar Panel.ZIndex="15" Height="25" Maximum="100" Value="0" Name="KDRatio" Width="auto" Margin="0,0,0,0">
+                            <ProgressBar.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#3B0000" Offset="0"/>
+                                    <GradientStop Color="#570000" Offset="0.5"/>
+                                    <GradientStop Color="#3B0000" Offset="1"/>
+                                </LinearGradientBrush>
+                            </ProgressBar.Background>
+                            <ProgressBar.Foreground>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#D91A1A" Offset="0"/>
+                                    <GradientStop Color="#ED2626" Offset="0.5"/>
+                                    <GradientStop Color="#D91A1A" Offset="1"/>
+                                </LinearGradientBrush>
+                            </ProgressBar.Foreground>
+                        </ProgressBar>
                     </Grid>
-                    <Grid Height="25">
-                        <Label Panel.ZIndex="16" Content="Wins"></Label>
-                        <Label Panel.ZIndex="16" Content="Defeats" HorizontalContentAlignment="Right"></Label>
-                        <Label Panel.ZIndex="16" Content="XXXX / XXXX" HorizontalContentAlignment="Center" Name="WDRatioText"></Label>
-                        <ProgressBar Panel.ZIndex="15" Height="25" Maximum="100" Value="100" Name="WDRatio"></ProgressBar>
+                    <Grid Height="25" Margin="0,10,0,0">
+                        <Label Panel.ZIndex="16" Content="Wins" Foreground="White">
+                            <Label.Effect>
+                                <DropShadowEffect ShadowDepth="0" BlurRadius="3" Color="Black" />
+                            </Label.Effect>
+                        </Label>
+                        <Label Panel.ZIndex="16" Content="Defeats" HorizontalContentAlignment="Right" Foreground="White">
+                            <Label.Effect>
+                                <DropShadowEffect ShadowDepth="0" BlurRadius="3" Color="Black" />
+                            </Label.Effect>
+                        </Label>
+                        <Label Panel.ZIndex="16" Content="0 / 0" HorizontalContentAlignment="Center" Name="WDRatioText" Foreground="White" >
+                            <Label.Effect>
+                                <DropShadowEffect ShadowDepth="0" BlurRadius="3" Color="Black" />
+                            </Label.Effect>
+                        </Label>
+                        <ProgressBar Panel.ZIndex="15" Height="25" Maximum="100" Value="0" Name="WDRatio" Width="auto" Margin="0,0,0,0">
+                            <ProgressBar.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#002742" Offset="0"/>
+                                    <GradientStop Color="#003357" Offset="0.5"/>
+                                    <GradientStop Color="#002742" Offset="1"/>
+                                </LinearGradientBrush>
+                            </ProgressBar.Background>
+                            <ProgressBar.Foreground>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#0FC3FF" Offset="0"/>
+                                    <GradientStop Color="#45D0FF" Offset="0.5"/>
+                                    <GradientStop Color="#0FC3FF" Offset="1"/>
+                                </LinearGradientBrush>
+                            </ProgressBar.Foreground>
+                        </ProgressBar>
                     </Grid>
-                </StackPanel>
+                    <Label Content="Data updates automaticaly every few minutes (if you are connected to internet)" HorizontalAlignment="Center" VerticalAlignment="Bottom"></Label>
+                    <Grid Margin="0,75,0,0">
+                        <Label  HorizontalAlignment="Left" Content="Design by Riot Games Inc. ~ modified by klukule" VerticalAlignment="Bottom"></Label>
+                        <Label Margin="0,0,0,0" Content="Thanks to Quobject for creating SocketIoClientDotNet" HorizontalAlignment="Right" VerticalAlignment="Bottom"></Label>
+                    </Grid>
+                    </StackPanel>
             </Grid >
         </StackPanel>
     </Grid>

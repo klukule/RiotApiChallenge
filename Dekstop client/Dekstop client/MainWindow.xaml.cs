@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Quobject.SocketIoClientDotNet.Client;
 using Newtonsoft.Json.Linq;
+using System.Windows.Media.Animation;
 
 namespace Dekstop_client
 {
@@ -34,15 +35,22 @@ namespace Dekstop_client
             {
                 dataPanel.Visibility = Visibility.Visible;
             }
+            //Set labels
             kdRatioLabel.Content = kills + " / " + deaths;
-
             wdRatioLabel.Content = wins + " / " + defeats;
             statsForLabel.Content = "Statistics for " + name;
 
+            //Set maximums
             kdRatioBar.Maximum = kills + deaths;
-            kdRatioBar.Value = kills;
             wdRatioBar.Maximum = wins + defeats;
-            wdRatioBar.Value = wins;
+            //Set animation duration
+            Duration duration = new Duration(TimeSpan.FromSeconds(1));
+            //Begin animation for KDbar
+            DoubleAnimation kdValueAnim = new DoubleAnimation(kills, duration);
+            kdRatioBar.BeginAnimation(ProgressBar.ValueProperty, kdValueAnim);
+            //Begin animation for WDbar
+            DoubleAnimation wdValueAnim = new DoubleAnimation(wins, duration);
+            wdRatioBar.BeginAnimation(ProgressBar.ValueProperty, wdValueAnim);
         }
 
         public MainWindow(JArray startingData,Socket socket)

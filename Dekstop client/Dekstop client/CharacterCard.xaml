@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              Height="325" Width="204">
     <Grid Margin="10,0,10,0">
+        <Label Panel.ZIndex="-1" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Loading image, please wait..."></Label>
         <Image Panel.ZIndex="0" Name="champImage" Stretch="Uniform" UseLayoutRounding="True" Width="154" Height="280" Margin="0,22,0,0" MouseLeftButtonDown="Image_MouseLeftButtonDown" MouseLeave="Image_MouseLeave" MouseEnter="Image_MouseEnter"></Image>
         <Image Panel.ZIndex="2" Name="imageOverlay" Source="res/champOverlay.png" Width="184" Height="308" Margin="0,17,0,0" MouseLeftButtonDown="Image_MouseLeftButtonDown" MouseLeave="Image_MouseLeave" MouseEnter="Image_MouseEnter">
             <Image.Effect>
